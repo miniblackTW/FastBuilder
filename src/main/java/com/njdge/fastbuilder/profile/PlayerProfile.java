@@ -28,7 +28,6 @@ public class PlayerProfile {
     private Arena arena;
     private boolean finished = false;
     private boolean placed = false;
-    private boolean firstBlockPlaced = false;
     private List<Location> placedBlocks;
     private Long time,pb;
     private int blocks;
@@ -52,16 +51,6 @@ public class PlayerProfile {
 
     public void reset() {
         PlayerUtils.reset(player,true);
-    }
-
-    private boolean firstBlockPlaced = false;
-
-    public boolean isFirstBlockPlaced() {
-        return firstBlockPlaced;
-    }
-
-    public void setFirstBlockPlaced(boolean firstBlockPlaced) {
-        this.firstBlockPlaced = firstBlockPlaced;
     }
     
     public void giveItems() {
