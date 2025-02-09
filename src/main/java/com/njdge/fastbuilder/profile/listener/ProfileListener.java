@@ -156,44 +156,43 @@ public class ProfileListener implements Listener {
         }
     }
 
-    @EventHandler
-    public void onPlace(BlockPlaceEvent e) {
-        Player player = e.getPlayer();
-        PlayerProfile profile = plugin.getProfileManager().getProfiles().get(player.getUniqueId());
-        Arena arena = profile.getArena();
-        Island island = arena.getIsland(player);
+@EventHandler
+public void onPlace(BlockPlaceEvent e) {
+    Player player = e.getPlayer();
+    PlayerProfile profile = plugin.getProfileManager().getProfiles().get(player.getUniqueId());
+    Arena arena = profile.getArena();
+    Island island = arena.getIsland(player);
 
-        if (profile.getState().equals(ProfileState.PLAYING)) {
-            PlayerInventory inv = e.getPlayer().getInventory();
-            if ((inv.getItem(0) == null && inv.getHeldItemSlot() == 1)) {
-                inv.setItem(0, FastBuilderItems.block.build());
-            } else if (inv.getItem(1) == null && inv.getHeldItemSlot() == 0) {
-                inv.setItem(1, FastBuilderItems.block.build());
-            }
-
-            if (!island.getPlaceableCuboid().isIn(e.getBlock().getLocation())) {
-                e.setCancelled(true);
-                sendActionBar(player, CC.RED + "You can't place blocks here");
-            } else {
-                if (!profile.isPlaced()) {
-                    profile.setBlocks(0);
-                    profile.setPlaced(true);
-                    profile.startTimer();
-                }
-
-                if (!profile.isFirstBlockPlaced()) {
-                    profile.setBlocks(profile.getBlocks() + 2);
-                    profile.setFirstBlockPlaced(true);
-                } else {
-                    profile.setBlocks(profile.getBlocks() + 1); // player placed the first block before, so +1
-                }
-
-                profile.getPlacedBlocks().add(e.getBlock().getLocation());
-            }
-        } else if (profile.getState().equals(ProfileState.EDITING)) {
-            e.setCancelled(false);
+    if (profile.state().equals(ProfileState.PLAYING)) {
+        PlayerInventory inv = e.getPlayer().getInventory();
+        if ((inv.getItem(0) == null && inv.getHeldItemSlot() == 1)) {
+            inv.setItem(0, FastBuilderItems.block.build());
+        } else if (inv.getItem(1) == null && inv.getHeldItemSlot() == 0) {
+            inv.setItem(1, FastBuilderItems.block.build());
         }
+
+        if (!island.getPlaceableCuboid().isIn(e.getBlock().getLocation())) {
+            e.setCancelled(true);
+            sendActionBar(player, CC.RED + "You can't place blocks here");
+        } else {
+            if (!profile.placed()) {
+                profile.blocks(0);
+                profile.placed(true);
+                profile.startTimer();
+            }
+
+            if (!profile.firstBlockPlaced()) {
+                profile.blocks(profile.blocks() + 2);
+                profile.firstBlockPlaced(true);
+            } else {
+                profile.blocks(profile.blocks() + 1); // player placed the first block before, so +1
+            }
+            profile.placedBlocks().add(e.getBlock().getLocation());
+        }
+    } else if (profile.state().equals(ProfileState.EDITING)) {
+        e.setCancelled(false);
     }
+}
 
     @EventHandler
     public void onBreak(BlockBreakEvent e) {
