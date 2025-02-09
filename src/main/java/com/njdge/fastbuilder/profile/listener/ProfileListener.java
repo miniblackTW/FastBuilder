@@ -182,10 +182,10 @@ public void onPlace(BlockPlaceEvent e) {
             }
 
             if (!profile.firstBlockPlaced()) {
-                profile.blocks(profile.blocks() + 2); // player places the first block -> +2
+                profile.blocks(profile.blocks() + 2);
                 profile.firstBlockPlaced(true);
             } else {
-                profile.blocks(profile.blocks() + 1);
+                profile.blocks(profile.blocks() + 1); // player placed the first block before -> +1
             }
 
             profile.placedBlocks().add(e.getBlock().getLocation());
