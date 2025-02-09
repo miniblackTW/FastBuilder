@@ -181,7 +181,7 @@ public class ProfileListener implements Listener {
                     profile.placed(true);
                     profile.startTimer();
                 } else {
-                    profile.blocks(profile.blocks() + 1); // player placed the first block before, so +1
+                    profile.setBlocks(profile.getBlocks() + 1); // player placed the first block before, so +1
                 }
                 profile.placedBlocks().add(e.getBlock().getLocation());
             }
