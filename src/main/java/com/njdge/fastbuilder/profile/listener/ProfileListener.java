@@ -176,14 +176,10 @@ public class ProfileListener implements Listener {
                 sendActionBar(player, CC.RED + "You can't place blocks here");
             } else {
                 if (!profile.placed()) {
-                    profile.blocks(0);
+                    profile.setBlocks(0);
+                    profile.setBlocks(profile.getBlocks() + 2);
                     profile.placed(true);
                     profile.startTimer();
-                }
-    
-                if (!profile.firstBlockPlaced()) {
-                    profile.blocks(profile.blocks() + 2);
-                    profile.firstBlockPlaced(true);
                 } else {
                     profile.blocks(profile.blocks() + 1); // player placed the first block before, so +1
                 }
