@@ -53,6 +53,16 @@ public class PlayerProfile {
         PlayerUtils.reset(player,true);
     }
 
+    private boolean firstBlockPlaced = false;
+
+    public boolean isFirstBlockPlaced() {
+        return firstBlockPlaced;
+    }
+
+    public void setFirstBlockPlaced(boolean firstBlockPlaced) {
+        this.firstBlockPlaced = firstBlockPlaced;
+    }
+    
     public void giveItems() {
         player.getInventory().setItem(0, block.type(this.getBlockType()).build());
         player.getInventory().setItem(1, block.type(this.getBlockType()).build());
